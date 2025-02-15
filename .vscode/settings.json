@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "mowi.h": "c",
+        "windows.h": "c",
+        "stdbool.h": "c",
+        "window.h": "c"
+    }
+}
