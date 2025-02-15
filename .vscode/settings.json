@@ -4,6 +4,8 @@
         "mowi.h": "c",
         "windows.h": "c",
         "stdbool.h": "c",
-        "window.h": "c"
+        "window.h": "c",
+        "stdlib.h": "c",
+        "gl.h": "c"
     }
 }

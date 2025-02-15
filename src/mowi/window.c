@@ -7,12 +7,17 @@
 #include <gl/gl.h>
 #include <stdint.h>
 
+#include "mowi/mowi.h"
+
+const uint32_t WINDOW_WIDTH = 1024;
+const uint32_t WINDOW_HEIGHT = 768;
+
 static bool quit = false;
 
 static const char* display_text = "Colorful Text\nsdfsdf"; // Example text
 static COLORREF colors[] = { RGB(255, 0, 0), RGB(0, 255, 0), RGB(0, 0, 255), RGB(255, 255, 0), RGB(255, 0, 255) };
 
-HFONT h_font = NULL;
+HFONT h_font = NULL; // initialized later
 
 // Custom Paint for Edit Control
 LRESULT CALLBACK SubclassEditProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
@@ -42,16 +47,26 @@ LRESULT CALLBACK SubclassEditProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             DeleteObject(hBrush);
 
             // Draw each character in different colors
-            int length = lstrlen(display_text);
-            int x = 5; // Starting position
-            for (int i = 0; i < length; i++) {
-                SetTextColor(hdc, colors[i % (sizeof(colors) / sizeof(colors[0]))]);
-                char ch[2] = { display_text[i], '\0' };
-                TextOut(hdc, x, 5, ch, 1);
-                SIZE textSize;
-                GetTextExtentPoint32(hdc, ch, 1, &textSize);
-                x += textSize.cx; // Move to next character position
-            }
+			int cy = 0; // height of character (consolas(20) -> width=9, height=20)
+			int offset_x = 0;
+			int offset_y = 0;
+			for (int y = 0; y < SCREEN_ROWS; y++) {
+				for (int x = 0; x < SCREEN_COLUMNS; x++) {
+					SetTextColor(hdc, RGB(screen_grid[y][x].color.red, screen_grid[y][x].color.green, screen_grid[y][x].color.blue));
+					char ch[2] = { screen_grid[y][x].symbol, '\0' };
+					TextOut(hdc, offset_x, offset_y, ch, 1);
+					SIZE textSize;
+             	    GetTextExtentPoint32(hdc, ch, 1, &textSize);
+             	    offset_x += textSize.cx; // Move to next character position
+					printf("%d, %d\n", textSize.cx, textSize.cy);
+					cy = textSize.cy;
+            	}
+				offset_x = 0;
+				offset_y += cy;
+			}	
+
+			mowi_redraw_tick();
+
 
             EndPaint(hwnd, &ps);
             return 0;
@@ -77,21 +92,19 @@ int WINAPI RunWindow(HINSTANCE hInstance, int nCmdShow) {
 
 	RegisterClass(&window_class);
 
-    const uint32_t INITIAL_WINDOW_WIDTH = 1024;
-    const uint32_t INITIAL_WINDOW_HEIGHT = 768;
-
 	HWND window_handle =
-		CreateWindow((PCSTR)window_class_name, "Fönsternamn", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT, NULL, NULL, hInstance, NULL);
+		CreateWindow((PCSTR)window_class_name, "Fönsternamn", WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hInstance, NULL);
 	if (window_handle == NULL) { return -1; }
 
-    HWND textbox_handle = 
-    CreateWindow("EDIT", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_MULTILINE | ES_READONLY, 0, 0, INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT, window_handle, (HMENU)1, hInstance, NULL);
+    /* HWND textbox_handle = 
+    CreateWindow("EDIT", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_MULTILINE | ES_READONLY, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, window_handle, (HMENU)1, hInstance, NULL);
 	if (textbox_handle == NULL) { return -1; }
+	*/
 
     h_font = CreateFont(20, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
         OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_DONTCARE, "Consolas");
 
-    SetWindowSubclass(textbox_handle, SubclassEditProc, 1, 0);
+    SetWindowSubclass(window_handle, SubclassEditProc, 1, 0);
 
 	// setup för openGL
 	HDC hdc = GetDC(window_handle);
@@ -121,6 +134,7 @@ int WINAPI RunWindow(HINSTANCE hInstance, int nCmdShow) {
 			DispatchMessage(&message);
 		}
 
+		mowi_tick();
 
 		//glClearColor(255.0f, 255.0f, 255.0f, 1.0f);
 		//glClear(GL_COLOR_BUFFER_BIT);
