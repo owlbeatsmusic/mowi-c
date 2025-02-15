@@ -6,6 +6,9 @@
         "stdbool.h": "c",
         "window.h": "c",
         "stdlib.h": "c",
-        "gl.h": "c"
+        "gl.h": "c",
+        "input.h": "c",
+        "renderer.h": "c",
+        "color.h": "c"
     }
 }

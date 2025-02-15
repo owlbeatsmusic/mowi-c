@@ -1,5 +1,5 @@
 /*
-cl -I./include -I./lib .\src\main.c .\src\mowi\mowi.c .\src\mowi\window.c .\src\common\color.c /link opengl32.lib gdi32.lib user32.lib
+cl -I./include -I./lib .\src\main.c .\src\mowi\mowi.c .\src\mowi\window.c .\src\mowi\input.c .\src\mowi\renderer.c .\src\common\color.c /link opengl32.lib gdi32.lib user32.lib
 */
 
 #include  <stdio.h>

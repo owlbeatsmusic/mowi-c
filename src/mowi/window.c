@@ -8,74 +8,33 @@
 #include <stdint.h>
 
 #include "mowi/mowi.h"
+#include "mowi/input.h"
+#include "mowi/renderer.h"
 
 const uint32_t WINDOW_WIDTH = 1024;
 const uint32_t WINDOW_HEIGHT = 768;
 
 static bool quit = false;
 
-static const char* display_text = "Colorful Text\nsdfsdf"; // Example text
-static COLORREF colors[] = { RGB(255, 0, 0), RGB(0, 255, 0), RGB(0, 0, 255), RGB(255, 255, 0), RGB(255, 0, 255) };
-
+HWND window_handle;
 HFONT h_font = NULL; // initialized later
+
+
 
 // Custom Paint for Edit Control
 LRESULT CALLBACK SubclassEditProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
     switch (message) {
-        case WM_CREATE: {
-            // Create font once during initialization
-            h_font = CreateFont(20, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
-                               OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_DONTCARE, "Arial");
 
-            // Set the font on the control
-            SendMessage(hwnd, WM_SETFONT, (WPARAM)h_font, TRUE);
-            break;
-        }
         case WM_PAINT: {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hwnd, &ps);
-
-            HFONT oldFont = (HFONT)SelectObject(hdc, h_font);
-
-            RECT rect;
-            GetClientRect(hwnd, &rect);
-            SetBkMode(hdc, TRANSPARENT);
-
-            // Set custom background color
-            HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
-            FillRect(hdc, &rect, hBrush);
-            DeleteObject(hBrush);
-
-            // Draw each character in different colors
-			int cy = 0; // height of character (consolas(20) -> width=9, height=20)
-			int offset_x = 0;
-			int offset_y = 0;
-			for (int y = 0; y < SCREEN_ROWS; y++) {
-				for (int x = 0; x < SCREEN_COLUMNS; x++) {
-					SetTextColor(hdc, RGB(screen_grid[y][x].color.red, screen_grid[y][x].color.green, screen_grid[y][x].color.blue));
-					char ch[2] = { screen_grid[y][x].symbol, '\0' };
-					TextOut(hdc, offset_x, offset_y, ch, 1);
-					SIZE textSize;
-             	    GetTextExtentPoint32(hdc, ch, 1, &textSize);
-             	    offset_x += textSize.cx; // Move to next character position
-					printf("%d, %d\n", textSize.cx, textSize.cy);
-					cy = textSize.cy;
-            	}
-				offset_x = 0;
-				offset_y += cy;
-			}	
-
+			renderer_render_screen();
 			mowi_redraw_tick();
-
-
-            EndPaint(hwnd, &ps);
             return 0;
         }
         case WM_NCDESTROY:
-            RemoveWindowSubclass(hwnd, SubclassEditProc, uIdSubclass);
+            RemoveWindowSubclass(window_handle, SubclassEditProc, uIdSubclass);
             break;
     }
-    return DefSubclassProc(hwnd, message, wParam, lParam);
+    return DefSubclassProc(window_handle, message, wParam, lParam);
 }
 
 
@@ -92,7 +51,7 @@ int WINAPI RunWindow(HINSTANCE hInstance, int nCmdShow) {
 
 	RegisterClass(&window_class);
 
-	HWND window_handle =
+	window_handle =
 		CreateWindow((PCSTR)window_class_name, "Fönsternamn", WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hInstance, NULL);
 	if (window_handle == NULL) { return -1; }
 
@@ -152,6 +111,25 @@ int WINAPI RunWindow(HINSTANCE hInstance, int nCmdShow) {
 
 LRESULT CALLBACK WindowsProcessMessage(HWND window_handle, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
+		case WM_KEYDOWN: {
+			input_keyboard_press((uint32_t)wParam, lParam);
+			break;
+		}
+		case WM_LBUTTONDOWN: {  // Left mouse button click
+			input_mouse_lmb_click(LOWORD(lParam), HIWORD(lParam));
+			break;
+        }
+
+        case WM_RBUTTONDOWN: {  // Right mouse button click
+            input_mouse_rmb_click(LOWORD(lParam), HIWORD(lParam));
+			break;
+        }
+
+        case WM_MOUSEMOVE: {  // Mouse movement
+            input_mouse_move(LOWORD(lParam), HIWORD(lParam));
+			break;
+        }
+
 		case WM_QUIT:
 		case WM_DESTROY: {
 			quit = true;
