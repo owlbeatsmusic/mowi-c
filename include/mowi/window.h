@@ -9,6 +9,6 @@ extern const uint32_t WINDOW_HEIGHT;
 extern HWND window_handle;
 extern HFONT h_font; // initialized later
 
-extern int WINAPI RunWindow(HINSTANCE hInstance, int nCmdShow);
+extern int WINAPI window_RunWindow(HINSTANCE hInstance, int nCmdShow);
 
 #endif

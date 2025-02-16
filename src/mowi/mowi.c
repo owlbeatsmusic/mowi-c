@@ -30,6 +30,8 @@ void mowi_create(void) {
 
     #ifdef _WIN32
         HINSTANCE hInstance = GetModuleHandle(NULL);
-        RunWindow(hInstance, SW_SHOWDEFAULT);
+        window_RunWindow(hInstance, SW_SHOWDEFAULT);
     #endif
+
+
 }

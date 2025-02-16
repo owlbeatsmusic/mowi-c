@@ -41,7 +41,7 @@ LRESULT CALLBACK SubclassEditProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 LRESULT CALLBACK WindowsProcessMessage(HWND window_handle, UINT message, WPARAM wParam, LPARAM lParam);
 
 // this is the new main function called by windows
-int WINAPI RunWindow(HINSTANCE hInstance, int nCmdShow) {
+int WINAPI window_RunWindow(HINSTANCE hInstance, int nCmdShow) {
 
 	static WNDCLASS window_class = { 0 };
 	static const wchar_t window_class_name[] = L"My Window Class";
