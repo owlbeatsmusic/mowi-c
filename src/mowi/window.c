@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -142,6 +141,7 @@ const uint32_t WINDOW_HEIGHT = 768;
 	}
 
 #endif
+
 
 #ifdef __APPLE__
 

@@ -1,9 +1,50 @@
 #include <stdio.h>
 
+#include "mowi/widget.h"
 #include "mowi/mowi.h"
 #include "mowi/window.h"
 #include "common/color.h"
 #include "mowi/renderer.h"
+
+int screen_x = 0;
+int screen_y = 0;
+
+void input_click_widget(Widget widget) {
+	switch (widget.type) {
+		case MOWI_TEXT: { break; }
+		case MOWI_RECT: { break; }
+		case MOWI_HALF_RECT: { break; }
+		case MOWI_ACTION_BUTTON: {
+
+			break;
+		}
+		case MOWI_TOGGLE_BUTTON: {
+
+			break;
+		}
+		case MOWI_LIST_BOX: {
+
+			break;
+		}
+		case MOWI_RADIAL_BOX: {
+			
+			break;
+		}
+		case MOWI_SLIDER: {
+			
+			break;
+		}
+		case MOWI_TEXT_BOX: {
+			
+			break;
+		}
+		case MOWI_CONSOLE: {
+			
+			break;
+		}
+	}
+}
+
 
 #ifdef _WIN32
 
@@ -29,30 +70,33 @@
     void input_keyboard_press(uint32_t key_code) {
 
     }
+
 #endif
 
 
 void input_mouse_lmb_click(int x, int y) {
-    //printf("(%d, %d)\n", x / 9, y / 20);
+    screen_x = x / 9;
+    screen_y = y / 20;
+    for (int i = 0; i < widgets_length; i++) {
+        input_click_widget(widgets[i]);
+    }
 
 }
 
 void input_mouse_rmb_click(int x, int y) {
-    //printf("(%d, %d)\n", x / 9, y / 20);
+    screen_x = x / 9;
+    screen_y = y / 20;
 
 }
 
 void input_mouse_move(int x, int y) {
     if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT) {
 
-        int screen_x = x / 9;
-        int screen_y = y / 20;
-        //printf("(%d, %d)\n", screen_x, screen_y);
-        screen_grid[screen_y][screen_x].symbol = '*';
-        screen_grid[screen_y][screen_x].color  = RED;
+        screen_x = x / 9;
+        screen_y = y / 20;
 
-        //renderer_set_pixel(screen_x, screen_y);
-
+        for (int i = 0; i < widgets_length; i++) {
+            renderer_hover_widget(widgets[i]);
+        }
     }
-    //renderer_render_screen();
 }

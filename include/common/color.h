@@ -11,11 +11,18 @@ typedef struct {
 
 extern const Color WHITE;
 extern const Color FADED_WHITE;
+extern const Color BLACK;
+extern const Color FADED_BLACK;
 extern const Color RED;
 extern const Color FADED_RED;
 extern const Color GREEN;
 extern const Color FADED_GREEN;
 extern const Color BLUE;
 extern const Color FADED_BLUE;
+
+extern Color default_fg_color;
+extern Color default_fg_faded_color;
+extern Color default_bg_color;
+extern Color default_bg_faded_color;
 
 #endif

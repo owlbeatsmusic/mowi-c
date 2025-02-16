@@ -1,13 +1,137 @@
 #include <stdio.h>
 
+#include "common/color.h"
+#include "mowi/widget.h"
 #include "mowi/mowi.h"
 #include "mowi/window.h"
+#include "mowi/renderer.h"
+
+void renderer_render_widget(Widget widget) {
+	switch (widget.type) {
+		case MOWI_TEXT: {
+			printf("DRAW!\n");
+			for (int i = 0; i < widget.text_length; i ++) {
+				mowi_set_pixel(widget.x+i, widget.y, widget.text[i], default_fg_color);
+			}
+			break;
+		}
+		case MOWI_RECT: {
+			mowi_set_pixel(widget.x, 				   widget.y, 					    '.', default_fg_color);
+			mowi_set_pixel(widget.x+widget.rect_width-1, widget.y,					    '.', default_fg_color);
+			mowi_set_pixel(widget.x, 				   widget.y+widget.rect_height-1,   '\'', default_fg_color);
+			mowi_set_pixel(widget.x+widget.rect_width-1, widget.y+widget.rect_height-1, '\'', default_fg_color);
+
+			for (int i = 1; i < widget.rect_width-1; i++) {
+				mowi_set_pixel(widget.x+i, widget.y, 					  '-', default_fg_color);
+				mowi_set_pixel(widget.x+i, widget.y+widget.rect_height-1, '-', default_fg_color);
+			}
+			for (int i = 1; i < widget.rect_height-1; i++) {
+				mowi_set_pixel(widget.x, widget.y+i, 					  '|', default_fg_color);
+				mowi_set_pixel(widget.x+widget.rect_width-1, widget.y+i,  '|', default_fg_color);
+			}
+
+			break;
+		}
+		case MOWI_HALF_RECT: {
+			mowi_set_pixel(widget.x, 				   widget.y, 					    '.', default_fg_color);
+			mowi_set_pixel(widget.x+widget.rect_width-1, widget.y,					    '.', default_fg_color);
+			mowi_set_pixel(widget.x, 				   widget.y+widget.rect_height-1,   '\'', default_fg_color);
+			mowi_set_pixel(widget.x+widget.rect_width-1, widget.y+widget.rect_height-1, '\'', default_fg_color);
+
+			for (int i = 1; i < widget.rect_width-1; i++) {
+				mowi_set_pixel(widget.x+i, widget.y, 					  '-', default_fg_color);
+				mowi_set_pixel(widget.x+i, widget.y+widget.rect_height-1, '-', default_fg_color);
+			}
+			for (int i = 1; i < widget.rect_height-1; i++) {
+				mowi_set_pixel(widget.x, widget.y+i, 					  '|', default_fg_color);
+			}
+			break;
+		}
+		case MOWI_ACTION_BUTTON: {
+
+			break;
+		}
+		case MOWI_TOGGLE_BUTTON: {
+
+			break;
+		}
+		case MOWI_LIST_BOX: {
+
+			break;
+		}
+		case MOWI_RADIAL_BOX: {
+			
+			break;
+		}
+		case MOWI_SLIDER: {
+			
+			break;
+		}
+		case MOWI_TEXT_BOX: {
+			
+			break;
+		}
+		case MOWI_CONSOLE: {
+			
+			break;
+		}
+	}
+}
+
+void renderer_hover_widget(Widget widget) {
+	switch (widget.type) {
+		case MOWI_TEXT: {
+			
+			break;
+		}
+		case MOWI_RECT: {
+
+			break;
+		}
+		case MOWI_HALF_RECT: {
+
+			break;
+		}
+		case MOWI_ACTION_BUTTON: {
+
+			break;
+		}
+		case MOWI_TOGGLE_BUTTON: {
+
+			break;
+		}
+		case MOWI_LIST_BOX: {
+
+			break;
+		}
+		case MOWI_RADIAL_BOX: {
+			
+			break;
+		}
+		case MOWI_SLIDER: {
+			
+			break;
+		}
+		case MOWI_TEXT_BOX: {
+			
+			break;
+		}
+		case MOWI_CONSOLE: {
+			
+			break;
+		}
+	}
+}
 
 #ifdef _WIN32
 	#include <windows.h>
 	#include <gl/gl.h>
 
 	void renderer_render_screen(void) {
+
+		for (int i = 0; i < widgets_length; i++) {
+			renderer_render_widget(widgets[i]);
+		}
 
 		h_font = CreateFont(20, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
 			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_DONTCARE, "Consolas");
@@ -50,6 +174,7 @@
 		}	
 
 		EndPaint(window_handle, &ps);
+
 	}
 
 	void renderer_set_pixel(int x, int y) {
@@ -74,6 +199,15 @@
 
 #endif
 
+
 #ifdef __APPLE__
+
+void renderer_render_screen(void) {
+
+}
+
+void renderer_set_pixel(int x, int y) {
+
+}
 
 #endif

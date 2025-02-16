@@ -10,6 +10,8 @@
         "input.h": "c",
         "renderer.h": "c",
         "color.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "print.h": "c",
+        "widget.h": "c"
     }
 }
