@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "mowi/widget.h"
 #include "mowi/mowi.h"
@@ -9,17 +10,22 @@
 int screen_x = 0;
 int screen_y = 0;
 
-void input_click_widget(Widget widget) {
-	switch (widget.type) {
+void input_click_widget(Widget *widget) {
+	switch (widget->type) {
 		case MOWI_TEXT: { break; }
 		case MOWI_RECT: { break; }
 		case MOWI_HALF_RECT: { break; }
 		case MOWI_ACTION_BUTTON: {
-
+            if (screen_x >= widget->x && screen_x < widget->x+widget->action_button_title_length && screen_y == widget->y) {
+                widget->action_button_on_click();
+            }
 			break;
 		}
-		case MOWI_TOGGLE_BUTTON: {
-
+		case MOWI_TOGGLE_BUTTON: {  
+			if (screen_x >= widget->x && screen_x < widget->x+widget->toggle_button_title_length && screen_y == widget->y) {
+                if      (widget->toggle_button_state == 0) widget->toggle_button_state = 1;
+                else if (widget->toggle_button_state == 1) widget->toggle_button_state = 0;
+            }
 			break;
 		}
 		case MOWI_LIST_BOX: {
@@ -78,7 +84,7 @@ void input_mouse_lmb_click(int x, int y) {
     screen_x = x / 9;
     screen_y = y / 20;
     for (int i = 0; i < widgets_length; i++) {
-        input_click_widget(widgets[i]);
+        input_click_widget(&widgets[i]);
     }
 
 }

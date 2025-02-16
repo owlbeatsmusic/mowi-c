@@ -17,3 +17,5 @@ Color default_fg_color;
 Color default_fg_faded_color;
 Color default_bg_color;
 Color default_bg_faded_color;
+Color default_pop_color;
+Color default_pop_faded_color;

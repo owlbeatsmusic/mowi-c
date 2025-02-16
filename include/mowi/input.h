@@ -10,6 +10,9 @@
     void input_keyboard_press(uint32_t key_code); // src/mowi/window.m
 #endif
 
+extern int screen_x;
+extern int screen_y;
+
 void input_mouse_lmb_click(int x, int y);
 void input_mouse_rmb_click(int x, int y);
 void input_mouse_move(int x, int y);
