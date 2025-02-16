@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "common/color.h"
 #include "mowi/widget.h"
@@ -76,7 +77,7 @@ void renderer_render_widget(Widget widget) {
 			// options
 			for (int i = 0; i < widget.list_box_length; i ++) {
 				if (widget.list_box_options_internal[i].is_selected == 1) {
-					mowi_set_pixel(widget.x+1, widget.y+1+i, '>', default_pop_color);
+					mowi_set_pixel(widget.x+1, widget.y+1+i, '+', default_pop_color);
 				}
 				else {
 					mowi_set_pixel(widget.x+1, widget.y+1+i, ' ', default_fg_color);
@@ -84,6 +85,9 @@ void renderer_render_widget(Widget widget) {
 				for (int j = 0; j < widget.list_box_options_internal[i].title_length; j++) {
                     mowi_set_pixel(widget.x + 2 + j, widget.y + 1 + i, widget.list_box_options_internal[i].title[j], default_fg_color);
                 }
+			}
+			if (widget.list_box_show_counter == true) {
+				// TODO: 
 			}
 
 			break;
@@ -121,6 +125,7 @@ void renderer_hover_widget(Widget widget) {
 			}
 			else {
 				for (int i = 0; i < widget.action_button_title_length; i ++) {
+					
 					mowi_set_pixel(widget.x+i, widget.y, widget.action_button_title[i], default_fg_color);
 					renderer_set_pixel(widget.x+i, widget.y);
 				}
@@ -145,7 +150,22 @@ void renderer_hover_widget(Widget widget) {
 			}
 		}
 		case MOWI_LIST_BOX: {
+			for (int i = 0; i < widget.list_box_length; i++) {
+				if (screen_x >= widget.x+1 && screen_x < widget.x+2+widget.list_box_options_internal[i].title_length && screen_y == widget.y+1+widget.list_box_options_internal[i].index) {
+					for (int j = 0; j < widget.list_box_options_internal[i].title_length; j++) {
+						mowi_set_pixel(widget.x + 2 + j, widget.y + 1 + i, widget.list_box_options_internal[i].title[j], default_pop_color);
+						renderer_set_pixel(widget.x + 2 + j, widget.y + 1 + i);
 
+					}
+				} 
+				else {
+					for (int j = 0; j < widget.list_box_options_internal[i].title_length; j++) {
+						mowi_set_pixel(widget.x + 2 + j, widget.y + 1 + i, widget.list_box_options_internal[i].title[j], default_fg_color);
+						renderer_set_pixel(widget.x + 2 + j, widget.y + 1 + i);
+
+					}
+				}
+			}
 			break;
 		}
 		case MOWI_RADIAL_BOX: {

@@ -82,18 +82,12 @@ void mowi_create(void) {
     };
     mowi_add_widget(&toggle);
 
-    uint16_t  list_box_length;
-    uint16_t  list_box_selected_options_count;
-    char      list_box_title[64];
-    char      list_box_all_options[32][64];
-    char      list_box_selected_options[32][64];
-    BoxOption list_box_options_internal[64];
-
     Widget list_box = {
         .type = MOWI_LIST_BOX,
         .x = 35,
         .y = 13,
         .list_box_length = 5,
+        .list_box_show_counter = true,
         .list_box_selected_options_count = 0,
         .list_box_title = "ListBox",
         .list_box_all_options = {"Option", "Alternativ", "Test", "Hejsan", "Detta"}

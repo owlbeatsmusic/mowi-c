@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef enum {      // status:
     NONE,
@@ -18,7 +19,7 @@ typedef struct {
     char title[64];
     uint16_t title_length;
     uint16_t index;
-    uint8_t is_selected;
+    bool is_selected;
 } BoxOption;
 
 typedef struct {
@@ -59,6 +60,7 @@ typedef struct {
     // List Box
     uint16_t  list_box_length;
     uint16_t  list_box_selected_options_count;
+    bool      list_box_show_counter;
     char      list_box_title[64];
     char      list_box_all_options[32][64];
     char      list_box_selected_options[32][64];

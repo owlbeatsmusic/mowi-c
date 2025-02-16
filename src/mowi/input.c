@@ -29,7 +29,21 @@ void input_click_widget(Widget *widget) {
 			break;
 		}
 		case MOWI_LIST_BOX: {
+            for (int i = 0; i < widget->list_box_length; i++) {
+				if (screen_x >= widget->x+1 && screen_x < widget->x+2+widget->list_box_options_internal[i].title_length && screen_y == widget->y+1+widget->list_box_options_internal[i].index) {
+                    if (widget->list_box_options_internal[i].is_selected == false) {
+                        mowi_set_pixel(widget->x+1, widget->y+1+i, '+', default_pop_color);
+                        renderer_set_pixel(widget->x+1, widget->y+1+i);
+                        widget->list_box_options_internal[i].is_selected = true;
+                    }
+                    else {
+                        mowi_set_pixel(widget->x+1, widget->y+1+i, ' ', default_pop_color);
+                        renderer_set_pixel(widget->x+1, widget->y+1+i);
+                        widget->list_box_options_internal[i].is_selected = false;
 
+                    }
+                }
+            }
 			break;
 		}
 		case MOWI_RADIAL_BOX: {
