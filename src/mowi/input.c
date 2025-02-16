@@ -1,4 +1,3 @@
-#include <windows.h>
 #include <stdio.h>
 
 #include "mowi/mowi.h"
@@ -6,19 +5,32 @@
 #include "common/color.h"
 #include "mowi/renderer.h"
 
-void input_keyboard_press(uint32_t key_code, LPARAM lParam) {
-    if (key_code == 27) {
-        printf("ESCAPE!\n");
-    }
-    else {
-        /* key-press to string */
-        WCHAR key_name[128];
-        int result = GetKeyNameTextW(lParam, key_name, sizeof(key_name) / sizeof(WCHAR));
-        if (result > 0) {
-            //wprintf(L"Key: %s\n", key_name);
+#ifdef _WIN32
+
+    #include <windows.h>
+
+    void input_keyboard_press(uint32_t key_code, LPARAM lParam) {
+        if (key_code == 27) {
+            printf("ESCAPE!\n");
+        }
+        else {
+            /* key-press to string */
+            WCHAR key_name[128];
+            int result = GetKeyNameTextW(lParam, key_name, sizeof(key_name) / sizeof(WCHAR));
+            if (result > 0) {
+                //wprintf(L"Key: %s\n", key_name);
+            }
         }
     }
-}
+#endif
+
+#ifdef __APPLE__
+
+    void input_keyboard_press(uint32_t key_code) {
+
+    }
+#endif
+
 
 void input_mouse_lmb_click(int x, int y) {
     //printf("(%d, %d)\n", x / 9, y / 20);
@@ -39,7 +51,7 @@ void input_mouse_move(int x, int y) {
         screen_grid[screen_y][screen_x].symbol = '*';
         screen_grid[screen_y][screen_x].color  = RED;
 
-        renderer_set_pixel(screen_x, screen_y);
+        //renderer_set_pixel(screen_x, screen_y);
 
     }
     //renderer_render_screen();

@@ -9,6 +9,7 @@
         "gl.h": "c",
         "input.h": "c",
         "renderer.h": "c",
-        "color.h": "c"
+        "color.h": "c",
+        "stdint.h": "c"
     }
 }
