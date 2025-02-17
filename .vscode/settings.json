@@ -12,6 +12,7 @@
         "color.h": "c",
         "stdint.h": "c",
         "print.h": "c",
-        "widget.h": "c"
+        "widget.h": "c",
+        "renderer-widget.h": "c"
     }
 }

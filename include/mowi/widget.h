@@ -1,3 +1,6 @@
+#ifndef WIDGET_H_
+#define WIDGET_H_
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -69,6 +72,7 @@ typedef struct {
     // Radial Box
     uint16_t  radial_box_length;
     uint16_t  radial_box_selected_option_index;
+    bool      radial_box_show_selected_index;
     char      radial_box_title[64];
     char      radial_box_all_options[32][64];
     char      radial_box_selected_option[64];
@@ -90,3 +94,5 @@ typedef struct {
 
 extern Widget   widgets[64];
 extern uint16_t widgets_length;
+
+#endif

@@ -41,14 +41,18 @@ void mowi_add_widget(Widget *widget) {
             switch (widgets[i].type) {
                 case MOWI_LIST_BOX: {
                     for (int j = 0; j < widgets[i].list_box_length; j++) {
-                        BoxOption option = { .index = j, .is_selected = 0, .title_length=strlen(widgets[i].list_box_all_options[j]) };
+                        BoxOption option = { .index = j, .is_selected = false, .title_length=strlen(widgets[i].list_box_all_options[j]) };
                         strcpy(option.title, widgets[i].list_box_all_options[j]);
                         widgets[i].list_box_options_internal[j] = option;   
                     }
                     break;
                 }
                 case MOWI_RADIAL_BOX: {
-                    
+                    for (int j = 0; j < widgets[i].radial_box_length; j++) {
+                        BoxOption option = { .index = j, .is_selected = false, .title_length=strlen(widgets[i].radial_box_all_options[j]) };
+                        strcpy(option.title, widgets[i].radial_box_all_options[j]);
+                        widgets[i].radial_box_options_internal[j] = option;   
+                    }
                     break;
                 }
                 case MOWI_SLIDER: {
@@ -93,6 +97,18 @@ void mowi_create(void) {
         .list_box_all_options = {"Option", "Alternativ", "Test", "Hejsan", "Detta"}
     };
     mowi_add_widget(&list_box);
+
+    Widget radial_box = {
+        .type = MOWI_RADIAL_BOX,
+        .x = 55,
+        .y = 13,
+        .radial_box_length = 5,
+        .radial_box_show_selected_index = true,
+        .radial_box_title = "RadialBox",
+        .radial_box_all_options = {"Option", "Alternativ", "Test", "Hejsan", "Detta"}
+    };
+    mowi_add_widget(&radial_box);
+
 
     default_fg_color        = WHITE;
     default_fg_faded_color  = FADED_WHITE;
