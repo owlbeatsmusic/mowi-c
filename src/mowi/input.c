@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "mowi/widget.h"
+#include "mowi/widget/widget.h"
 #include "mowi/window.h"
 #include "mowi/renderer.h"
-#include "mowi/input-widget.h"
+#include "mowi/widget/widget-renderer.h"
 
 int screen_x = 0;
 int screen_y = 0;

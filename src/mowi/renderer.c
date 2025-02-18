@@ -3,10 +3,10 @@
 #include <stdbool.h>
 
 #include "common/color.h"
-#include "mowi/renderer-widget.h"
+#include "mowi/widget/widget-renderer.h"
 #include "mowi/renderer.h"
 #include "mowi/window.h"
-#include "mowi/widget.h"
+#include "mowi/widget/widget.h"
 #include "mowi/input.h"
 #include "mowi/mowi.h"
 

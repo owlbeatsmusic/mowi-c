@@ -12,7 +12,7 @@ typedef struct {
 } Pixel;
 
 extern Pixel screen_grid[SCREEN_ROWS][SCREEN_COLUMNS];
-
+    
 void mowi_set_pixel(int x, int y, char symbol, Color color);   
 void mowi_redraw_tick(void);
 void mowi_tick(void);

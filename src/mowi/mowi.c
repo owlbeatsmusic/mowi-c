@@ -6,8 +6,12 @@
 #include "common/print.h"
 #include "common/color.h"
 #include "mowi/window.h"
-#include "mowi/widget.h"
+#include "mowi/widget/widget.h"
 #include "mowi/mowi.h"
+
+#include "mowi/widget/widgets/action-button.h"
+#include "mowi/widget/widgets/toggle-button.h"
+
 
 #ifdef _WIN32
     #include <windows.h>
@@ -29,76 +33,32 @@ void mowi_tick(void) {
     
 }
 
-void test_on_click() {
-    printf("action button click!\n");
-}
+ActionButton action;
+ToggleButton toggle;
 
-void mowi_add_widget(Widget *widget) {
-    for (int i = 0; i < 64; i++) {
-        if (widgets[i].type == NONE) {
-            widgets[i] = *widget;
-            widgets_length++;
-            switch (widgets[i].type) {
-                case MOWI_LIST_BOX: {
-                    for (int j = 0; j < widgets[i].list_box_length; j++) {
-                        BoxOption option = { .index = j, .is_selected = false, .title_length=strlen(widgets[i].list_box_all_options[j]) };
-                        strcpy(option.title, widgets[i].list_box_all_options[j]);
-                        widgets[i].list_box_options_internal[j] = option;   
-                    }
-                    break;
-                }
-                case MOWI_RADIAL_BOX: {
-                    for (int j = 0; j < widgets[i].radial_box_length; j++) {
-                        BoxOption option = { .index = j, .is_selected = false, .title_length=strlen(widgets[i].radial_box_all_options[j]) };
-                        strcpy(option.title, widgets[i].radial_box_all_options[j]);
-                        widgets[i].radial_box_options_internal[j] = option;   
-                    }
-                    break;
-                }
-                case MOWI_SLIDER: {
-                    
-                    break;
-                }
-                case MOWI_TEXT_BOX: {
-                    
-                    break;
-                }
-                case MOWI_CONSOLE: {
-                    
-                    break;
-                }
-            }
-            break;
-        }
-    }
+void test_on_click(void) {
+    printf("toggle: %d\n", toggle.state);
 }
 
 void mowi_create(void) {
 
-    Widget toggle = {
-        .type = MOWI_TOGGLE_BUTTON,
-        .x = 14,
-        .y = 13,
-        .toggle_button_title = "Toggle Button",
-        .toggle_button_title_length = 13,
-        .toggle_button_state = 0,
-        //.action_button_on_click = &test_on_click
-    };
-    mowi_add_widget(&toggle);
+    widget_create_action_button(&action, 14, 14, "Action Button", &test_on_click); 
 
-    Widget list_box = {
+    widget_create_toggle_button(&toggle, 14, 13, "Toggle Button"); 
+
+    MowiWidget list_box = {
         .type = MOWI_LIST_BOX,
         .x = 35,
         .y = 13,
         .list_box_length = 5,
         .list_box_show_counter = true,
-        .list_box_selected_options_count = 0,
+        .list_box_number_of_selections = 0,
         .list_box_title = "ListBox",
         .list_box_all_options = {"Option", "Alternativ", "Test", "Hejsan", "Detta"}
     };
-    mowi_add_widget(&list_box);
+    mowi_add_widget(list_box, 0);
 
-    Widget radial_box = {
+    MowiWidget radial_box = {
         .type = MOWI_RADIAL_BOX,
         .x = 55,
         .y = 13,
@@ -107,7 +67,9 @@ void mowi_create(void) {
         .radial_box_title = "RadialBox",
         .radial_box_all_options = {"Option", "Alternativ", "Test", "Hejsan", "Detta"}
     };
-    mowi_add_widget(&radial_box);
+    mowi_add_widget(radial_box, 0);
+
+
 
 
     default_fg_color        = WHITE;

@@ -13,6 +13,8 @@
         "stdint.h": "c",
         "print.h": "c",
         "widget.h": "c",
-        "renderer-widget.h": "c"
+        "renderer-widget.h": "c",
+        "widget-renderer.h": "c",
+        "action-button.h": "c"
     }
 }

@@ -29,12 +29,11 @@ typedef struct {
 
     WidgetType type;
 
+    int index;
+    int user_widget_index;
+
     int x;
     int y;
-
-    //void (*render_fptr)();
-    //void (*hover_fptr)();
-    //void (*click_fptr)();
 
 
     // Text
@@ -62,7 +61,7 @@ typedef struct {
 
     // List Box
     uint16_t  list_box_length;
-    uint16_t  list_box_selected_options_count;
+    uint16_t  list_box_number_of_selections;
     bool      list_box_show_counter;
     char      list_box_title[64];
     char      list_box_all_options[32][64];
@@ -90,9 +89,44 @@ typedef struct {
     uint16_t text_box_length;
     char     text_box_text[1024];
 
-} Widget;
+} MowiWidget;
 
-extern Widget   widgets[64];
-extern uint16_t widgets_length;
+typedef struct {
+    char title[64];
+} ActionButton;
+
+typedef struct {
+    char title[64];
+    uint16_t state;
+} ToggleButton;
+
+typedef struct {
+    char title[64];
+    int number_of_selections;
+    char list_box_selected_options[32][64];
+} ListBox;
+
+typedef struct {
+    char title[64];
+    int selected_index;
+    char radial_box_selected_option[64];
+} RadialBox;
+
+typedef struct {
+    char title[64];
+    int slider_selected_value;
+} Slider;
+
+extern ActionButton *action_buttons[32];
+extern ToggleButton *toggle_buttons[32];
+extern ListBox      *list_boxes[32];
+extern RadialBox    *radial_boxes[32];
+extern Slider       *sliders[32];
+
+extern MowiWidget widgets[64];
+extern uint16_t   widgets_length;
+
+extern void mowi_add_widget(MowiWidget widget, int user_widget_index);
+extern void widget_user_update(MowiWidget widget);
 
 #endif

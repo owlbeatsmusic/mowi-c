@@ -1,35 +1,19 @@
 
-#include "mowi/renderer-widget.h"
+#include "mowi/widget/widget-renderer.h"
 #include "common/color.h"
-#include "mowi/widget.h"
+#include "mowi/widget/widget.h"
 #include "mowi/input.h"
 
-void input_click_widget(Widget *widget) {
+#include "mowi/widget/widgets/action-button.h"
+#include "mowi/widget/widgets/toggle-button.h"
+
+void input_click_widget(MowiWidget *widget) {
 	switch (widget->type) {
 		case MOWI_TEXT: { break; }
 		case MOWI_RECT: { break; }
 		case MOWI_HALF_RECT: { break; }
-		case MOWI_ACTION_BUTTON: {
-            if (screen_x >= widget->x && screen_x < widget->x+widget->action_button_title_length && screen_y == widget->y) {
-                widget->action_button_on_click();
-            }
-			break;
-		}
-		case MOWI_TOGGLE_BUTTON: {  
-			if (screen_x >= widget->x && screen_x < widget->x+widget->toggle_button_title_length+4 && screen_y == widget->y) {
-                if (widget->toggle_button_state == 0) {
-                    widget->toggle_button_state = 1;
-                    mowi_set_pixel(widget->x+1, widget->y, '+', default_pop_color);
-                    renderer_set_pixel(widget->x+1, widget->y);
-                }
-                else if (widget->toggle_button_state == 1) {
-                    widget->toggle_button_state = 0;
-                    mowi_set_pixel(widget->x+1, widget->y, ' ', default_fg_color);
-                    renderer_set_pixel(widget->x+1, widget->y);
-                }
-            }
-			break;
-		}
+		case MOWI_ACTION_BUTTON: { widget_input_action_button(widget); break; }
+		case MOWI_TOGGLE_BUTTON: { widget_input_toggle_button(widget); break; }
 		case MOWI_LIST_BOX: {
             for (int i = 0; i < widget->list_box_length; i++) {
 				if (screen_x >= widget->x+1 && screen_x < widget->x+2+widget->list_box_options_internal[i].title_length && screen_y == widget->y+1+widget->list_box_options_internal[i].index) {
