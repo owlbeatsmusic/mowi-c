@@ -56,15 +56,15 @@ void widget_update_user_toggle_button(MowiWidget widget) {
     toggle_buttons[widget.user_widget_index]->state = widget.toggle_button_state;
 }
 
-void widget_create_toggle_button(ToggleButton *toggle, int x, int y, char title[]) {
+void widget_create_toggle_button(ToggleButton *toggle_button, int x, int y, char title[]) {
     MowiWidget widget = {.type = MOWI_TOGGLE_BUTTON, .x = x, .y = y, .toggle_button_state = 0, .toggle_button_title_length=strlen(title)};
-    toggle->state = widget.toggle_button_state;
+    toggle_button->state = widget.toggle_button_state;
     strcpy(widget.toggle_button_title, title);
 
     int i = 0;
     while (i < 32) {
         if (toggle_buttons[i] == NULL) {
-            toggle_buttons[i] = toggle;
+            toggle_buttons[i] = toggle_button;
             break;
         }
         i++;

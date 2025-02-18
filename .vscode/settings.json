@@ -15,6 +15,12 @@
         "widget.h": "c",
         "renderer-widget.h": "c",
         "widget-renderer.h": "c",
-        "action-button.h": "c"
+        "action-button.h": "c",
+        "list-box.h": "c",
+        "rect.h": "c",
+        "toggle-button.h": "c",
+        "radial-box.h": "c",
+        "half-rect.h": "c",
+        "text.h": "c"
     }
 }

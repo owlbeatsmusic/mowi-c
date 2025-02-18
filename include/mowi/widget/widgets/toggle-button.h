@@ -9,6 +9,6 @@ void widget_hover_toggle_button(MowiWidget widget);
 
 void widget_update_user_toggle_button(MowiWidget widget);
 
-void widget_create_toggle_button(ToggleButton *toggle, int x, int y, char title[]);
+void widget_create_toggle_button(ToggleButton *toggle_button, int x, int y, char title[]);
 
 #endif

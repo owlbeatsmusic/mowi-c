@@ -46,6 +46,7 @@ void mowi_create(void) {
 
     widget_create_toggle_button(&toggle, 14, 13, "Toggle Button"); 
 
+    /*
     MowiWidget list_box = {
         .type = MOWI_LIST_BOX,
         .x = 35,
@@ -68,7 +69,7 @@ void mowi_create(void) {
         .radial_box_all_options = {"Option", "Alternativ", "Test", "Hejsan", "Detta"}
     };
     mowi_add_widget(radial_box, 0);
-
+    */
 
 
 

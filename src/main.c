@@ -1,5 +1,5 @@
 /* WIN32
-cl -I./include -I./lib .\src\main.c .\src\mowi\mowi.c .\src\mowi\window.c .\src\mowi\input.c .\src\mowi\widget\widget-input.c .\src\mowi\renderer.c .\src\mowi\widget\widget-renderer.c .\src\mowi\widget\widget.c .\src\common\color.c .\src\common\print.c .\src\mowi\widget\widgets\action-button.c .\src\mowi\widget\widgets\toggle-button.c /link opengl32.lib gdi32.lib user32.lib
+cl -I./include -I./lib .\src\main.c .\src\mowi\mowi.c .\src\mowi\window.c .\src\mowi\input.c .\src\mowi\renderer.c .\src\mowi\widget.c .\src\common\color.c .\src\common\print.c .\src\mowi\widgets\text.c .\src\mowi\widgets\rect.c .\src\mowi\widgets\half-rect.c .\src\mowi\widgets\action-button.c .\src\mowi\widgets\toggle-button.c .\src\mowi\widgets\list-box.c .\src\mowi\widgets\radial-box.c .\src\mowi\widgets\slider.c .\src\mowi\widgets\text-box.c /link opengl32.lib gdi32.lib user32.lib
 */
 
 /* APPLE

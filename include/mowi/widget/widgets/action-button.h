@@ -9,6 +9,6 @@ void widget_hover_action_button(MowiWidget widget);
 
 void widget_update_user_action_button(MowiWidget widget);
 
-void widget_create_action_button(ActionButton *action, int x, int y, char title[], void (*on_click_function)());
+void widget_create_action_button(ActionButton *action_button, int x, int y, char title[], void (*on_click_function)());
 
 #endif
