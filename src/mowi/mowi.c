@@ -14,7 +14,7 @@
     #include <gl/gl.h>
 #endif
 
-Pixel screen_grid[SCREEN_ROWS][SCREEN_COLUMNS];
+MowiPixel screen_grid[SCREEN_ROWS][SCREEN_COLUMNS];
 
 void mowi_set_pixel_internal(int x, int y, char symbol, Color color) {
     screen_grid[y][x].symbol = symbol;

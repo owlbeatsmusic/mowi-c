@@ -19,6 +19,16 @@ void test_on_click(void) {
 
 int main(void) {
 
+    /*
+    
+    TODO:
+        - Implemenet all widgets
+        - Setting window properties by function
+        - Refactoring to specify MoWi
+        - Documentation
+
+    */
+
     widget_create_action_button(&action, 14, 14, "Action Button", &test_on_click); 
     widget_create_toggle_button(&toggle, 14, 13, "Toggle Button"); 
 

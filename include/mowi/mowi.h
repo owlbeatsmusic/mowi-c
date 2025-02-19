@@ -11,9 +11,9 @@
 typedef struct {
     char symbol;
     Color color;
-} Pixel;
+} MowiPixel;
 
-extern Pixel screen_grid[SCREEN_ROWS][SCREEN_COLUMNS];
+extern MowiPixel screen_grid[SCREEN_ROWS][SCREEN_COLUMNS];
     
 void mowi_set_pixel_internal(int x, int y, char symbol, Color color);   
 void mowi_redraw_tick_internal(void);
