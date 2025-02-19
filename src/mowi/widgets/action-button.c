@@ -1,7 +1,7 @@
 
 #include "common/color.h"
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/input.h"
 
 void widget_input_action_button(MowiWidget *widget) {
@@ -11,22 +11,22 @@ void widget_input_action_button(MowiWidget *widget) {
 }
 
 void widget_render_action_button(MowiWidget widget) {
-    for (int i = 0; i < widget.toggle_button_title_length; i ++) { // same as mowi_text :/
-        mowi_set_pixel(widget.x+i, widget.y, widget.action_button_title[i], default_fg_color);
+    for (int i = 0; i < widget.action_button_title_length; i ++) { // same as mowi_text :/
+        mowi_set_pixel_internal(widget.x+i, widget.y, widget.action_button_title[i], default_fg_color);
     }
 }
 
 void widget_hover_action_button(MowiWidget widget) {
     if (screen_x >= widget.x && screen_x < widget.x+widget.action_button_title_length && screen_y == widget.y) {
         for (int i = 0; i < widget.action_button_title_length; i ++) {
-            mowi_set_pixel(widget.x+i, widget.y, widget.action_button_title[i], default_pop_color);
+            mowi_set_pixel_internal(widget.x+i, widget.y, widget.action_button_title[i], default_pop_color);
             renderer_set_pixel(widget.x+i, widget.y);
         }
     }
     else {
         for (int i = 0; i < widget.action_button_title_length; i ++) {
             
-            mowi_set_pixel(widget.x+i, widget.y, widget.action_button_title[i], default_fg_color);
+            mowi_set_pixel_internal(widget.x+i, widget.y, widget.action_button_title[i], default_fg_color);
             renderer_set_pixel(widget.x+i, widget.y);
         }
     }

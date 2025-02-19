@@ -6,12 +6,8 @@
 #include "common/print.h"
 #include "common/color.h"
 #include "mowi/window.h"
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/mowi.h"
-
-#include "mowi/widget/widgets/action-button.h"
-#include "mowi/widget/widgets/toggle-button.h"
-
 
 #ifdef _WIN32
     #include <windows.h>
@@ -20,31 +16,20 @@
 
 Pixel screen_grid[SCREEN_ROWS][SCREEN_COLUMNS];
 
-void mowi_set_pixel(int x, int y, char symbol, Color color) {
+void mowi_set_pixel_internal(int x, int y, char symbol, Color color) {
     screen_grid[y][x].symbol = symbol;
 	screen_grid[y][x].color = color;
 }
 
-void mowi_redraw_tick(void) {
+void mowi_redraw_tick_internal(void) {
     
 }
 
-void mowi_tick(void) { 
-    
+void mowi_tick_internal(void) { 
+
 }
 
-ActionButton action;
-ToggleButton toggle;
-
-void test_on_click(void) {
-    printf("toggle: %d\n", toggle.state);
-}
-
-void mowi_create(void) {
-
-    widget_create_action_button(&action, 14, 14, "Action Button", &test_on_click); 
-
-    widget_create_toggle_button(&toggle, 14, 13, "Toggle Button"); 
+void mowi_create(char window_title[]) {
 
     /*
     MowiWidget list_box = {
@@ -82,13 +67,13 @@ void mowi_create(void) {
 
     for (int y = 0; y < SCREEN_ROWS; y++) {
         for (int x = 0; x < SCREEN_COLUMNS; x++) {
-            mowi_set_pixel(x, y, ' ', FADED_WHITE);
+            mowi_set_pixel_internal(x, y, ' ', FADED_WHITE);
         }
     }
 
     #ifdef _WIN32
         HINSTANCE hInstance = GetModuleHandle(NULL);
-        window_RunWindow(hInstance, SW_SHOWDEFAULT);
+        window_RunWindow(hInstance, SW_SHOWDEFAULT, window_title);
     #endif
 
 

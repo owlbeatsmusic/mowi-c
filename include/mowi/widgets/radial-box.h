@@ -1,7 +1,7 @@
 #ifndef RADIAL_BOX_H_
 #define RADIAL_BOX_H_
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 
 void widget_input_radial_box(MowiWidget *widget);
 void widget_render_radial_box(MowiWidget widget);

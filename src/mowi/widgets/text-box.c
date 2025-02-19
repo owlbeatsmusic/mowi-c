@@ -1,7 +1,7 @@
 
 #include "common/color.h"
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/input.h"
 
 void widget_input_text_box(MowiWidget *widget) {

@@ -4,6 +4,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define MAX_WIDGET_TITLE_LENGTH   64
+#define MAX_BOX_OPTIONS           32
+#define MAX_BOX_OPTION_LENGTH     64
+#define MAX_USER_WIDGETS_PER_TYPE 32
+#define MAX_WIDGETS               32
+
 typedef enum {      // status:
     NONE,
     MOWI_TEXT,
@@ -50,12 +56,12 @@ typedef struct {
 
 
     // Action Button
-    char     action_button_title[64];
+    char     action_button_title[MAX_WIDGET_TITLE_LENGTH];
     uint16_t action_button_title_length;
     void   (*action_button_on_click)();
 
     // Toggle Button
-    char     toggle_button_title[64];
+    char     toggle_button_title[MAX_WIDGET_TITLE_LENGTH];
     uint16_t toggle_button_title_length;
     uint16_t toggle_button_state;
 
@@ -63,19 +69,19 @@ typedef struct {
     uint16_t  list_box_length;
     uint16_t  list_box_number_of_selections;
     bool      list_box_show_counter;
-    char      list_box_title[64];
-    char      list_box_all_options[32][64];
-    char      list_box_selected_options[32][64];
-    BoxOption list_box_options_internal[64];
+    char      list_box_title[MAX_WIDGET_TITLE_LENGTH];
+    char      list_box_all_options[MAX_BOX_OPTIONS][MAX_BOX_OPTION_LENGTH];
+    char      list_box_selected_options[MAX_BOX_OPTIONS][MAX_BOX_OPTION_LENGTH];
+    BoxOption list_box_options_internal[MAX_BOX_OPTIONS];
 
     // Radial Box
     uint16_t  radial_box_length;
     uint16_t  radial_box_selected_option_index;
     bool      radial_box_show_selected_index;
-    char      radial_box_title[64];
-    char      radial_box_all_options[32][64];
-    char      radial_box_selected_option[64];
-    BoxOption radial_box_options_internal[64];
+    char      radial_box_title[MAX_WIDGET_TITLE_LENGTH];
+    char      radial_box_all_options[MAX_BOX_OPTIONS][MAX_BOX_OPTION_LENGTH];
+    char      radial_box_selected_option[MAX_BOX_OPTION_LENGTH];
+    BoxOption radial_box_options_internal[MAX_BOX_OPTIONS];
     
     // Slider
     uint16_t slider_length;
@@ -92,41 +98,41 @@ typedef struct {
 } MowiWidget;
 
 typedef struct {
-    char title[64];
+    char title[MAX_WIDGET_TITLE_LENGTH];
 } ActionButton;
 
 typedef struct {
-    char title[64];
+    char title[MAX_WIDGET_TITLE_LENGTH];
     uint16_t state;
 } ToggleButton;
 
 typedef struct {
-    char title[64];
+    char title[MAX_WIDGET_TITLE_LENGTH];
     int number_of_selections;
-    char list_box_selected_options[32][64];
+    char list_box_selected_options[MAX_BOX_OPTIONS][MAX_BOX_OPTION_LENGTH];
 } ListBox;
 
 typedef struct {
-    char title[64];
+    char title[MAX_WIDGET_TITLE_LENGTH];
     int selected_index;
-    char radial_box_selected_option[64];
+    char radial_box_selected_option[MAX_BOX_OPTION_LENGTH];
 } RadialBox;
 
 typedef struct {
-    char title[64];
+    char title[MAX_WIDGET_TITLE_LENGTH];
     int slider_selected_value;
 } Slider;
 
-extern ActionButton *action_buttons[32];
-extern ToggleButton *toggle_buttons[32];
-extern ListBox      *list_boxes[32];
-extern RadialBox    *radial_boxes[32];
-extern Slider       *sliders[32];
+extern ActionButton *action_buttons[MAX_USER_WIDGETS_PER_TYPE];
+extern ToggleButton *toggle_buttons[MAX_USER_WIDGETS_PER_TYPE];
+extern ListBox      *list_boxes[MAX_USER_WIDGETS_PER_TYPE];
+extern RadialBox    *radial_boxes[MAX_USER_WIDGETS_PER_TYPE];
+extern Slider       *sliders[MAX_USER_WIDGETS_PER_TYPE];
 
-extern MowiWidget widgets[64];
+extern MowiWidget widgets[MAX_WIDGETS];
 extern uint16_t   widgets_length;
 
 extern void mowi_add_widget(MowiWidget widget, int user_widget_index);
-extern void widget_user_update(MowiWidget widget);
+extern void widget_user_update_internal(MowiWidget widget);
 
 #endif

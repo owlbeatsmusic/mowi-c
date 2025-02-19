@@ -1,7 +1,7 @@
 #ifndef SLIDER_H_
 #define SLIDER_H_
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 
 void widget_input_slider(MowiWidget *widget);
 void widget_render_slider(MowiWidget widget);

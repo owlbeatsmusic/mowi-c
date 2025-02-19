@@ -1,7 +1,7 @@
 
 #include "common/color.h"
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/input.h"
 
 void widget_input_half_rect(MowiWidget *widget) {
@@ -9,17 +9,17 @@ void widget_input_half_rect(MowiWidget *widget) {
 }
 
 void widget_render_half_rect(MowiWidget widget) {
-    mowi_set_pixel(widget.x, 				  		  widget.y, 					      '.', default_fg_color);
-    mowi_set_pixel(widget.x+widget.half_rect_width-1, widget.y,					          '.', default_fg_color);
-    mowi_set_pixel(widget.x, 				          widget.y+widget.half_rect_height-1, '\'', default_fg_color);
-    mowi_set_pixel(widget.x+widget.half_rect_width-1, widget.y+widget.half_rect_height-1, '\'', default_fg_color);
+    mowi_set_pixel_internal(widget.x, 				  		  widget.y, 					      '.', default_fg_color);
+    mowi_set_pixel_internal(widget.x+widget.half_rect_width-1, widget.y,					          '.', default_fg_color);
+    mowi_set_pixel_internal(widget.x, 				          widget.y+widget.half_rect_height-1, '\'', default_fg_color);
+    mowi_set_pixel_internal(widget.x+widget.half_rect_width-1, widget.y+widget.half_rect_height-1, '\'', default_fg_color);
 
     for (int i = 1; i < widget.half_rect_width-1; i++) {
-        mowi_set_pixel(widget.x+i, widget.y, 				           '-', default_fg_color);
-        mowi_set_pixel(widget.x+i, widget.y+widget.half_rect_height-1, '-', default_fg_color);
+        mowi_set_pixel_internal(widget.x+i, widget.y, 				           '-', default_fg_color);
+        mowi_set_pixel_internal(widget.x+i, widget.y+widget.half_rect_height-1, '-', default_fg_color);
     }
     for (int i = 1; i < widget.half_rect_height-1; i++) {
-        mowi_set_pixel(widget.x, widget.y+i, 					  '|', default_fg_color);
+        mowi_set_pixel_internal(widget.x, widget.y+i, 					  '|', default_fg_color);
     }
 }
 

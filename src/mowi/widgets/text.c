@@ -1,7 +1,7 @@
 
 #include "common/color.h"
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/input.h"
 
 void widget_input_text(MowiWidget *widget) {
@@ -10,7 +10,7 @@ void widget_input_text(MowiWidget *widget) {
 
 void widget_render_text(MowiWidget widget) {
     for (int i = 0; i < widget.text_length; i ++) {
-        mowi_set_pixel(widget.x+i, widget.y, widget.text[i], default_fg_color);
+        mowi_set_pixel_internal(widget.x+i, widget.y, widget.text[i], default_fg_color);
     }
 }
 

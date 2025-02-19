@@ -1,24 +1,24 @@
 
 #include "common/color.h"
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/input.h"
 
 void widget_input_radial_box(MowiWidget *widget) {
     for (int i = 0; i < widget->radial_box_length; i++) {
         if (screen_x >= widget->x+1 && screen_x < widget->x+2+widget->radial_box_options_internal[i].title_length && screen_y == widget->y+1+widget->radial_box_options_internal[i].index) {
             if (widget->radial_box_options_internal[i].is_selected == false) {
-                mowi_set_pixel(widget->x+1, widget->y+1+i, '>', default_pop_color);
+                mowi_set_pixel_internal(widget->x+1, widget->y+1+i, '>', default_pop_color);
                 renderer_set_pixel(widget->x+1, widget->y+1+i);
                 widget->radial_box_options_internal[i].is_selected = true;
                 for (int j = 0; j < widget->radial_box_length; j++) {
                     if (j==i) continue;
                     widget->radial_box_options_internal[j].is_selected = false;
                 }
-                renderer_hover_widget(*widget);
+                renderer_hover_widget_internal(*widget);
             }
             else {
-                mowi_set_pixel(widget->x+1, widget->y+1+i, ' ', default_pop_color);
+                mowi_set_pixel_internal(widget->x+1, widget->y+1+i, ' ', default_pop_color);
                 renderer_set_pixel(widget->x+1, widget->y+1+i);
                 widget->radial_box_options_internal[i].is_selected = false;
 
@@ -28,11 +28,60 @@ void widget_input_radial_box(MowiWidget *widget) {
 }
 
 void widget_render_radial_box(MowiWidget widget) {
+    MowiWidget half_rect = {.type = MOWI_HALF_RECT, .x = widget.x, .y = widget.y, .half_rect_width = 3, .half_rect_height = widget.radial_box_length+2};
+    renderer_render_widget(half_rect);
 
+    // title
+    mowi_set_pixel_internal(widget.x+2, widget.y, '[', default_fg_color);
+    for (int i = 0; i < strlen(widget.radial_box_title); i ++) {
+        mowi_set_pixel_internal(widget.x+3+i, widget.y, widget.radial_box_title[i], default_fg_color);
+    }
+    mowi_set_pixel_internal(widget.x+3+strlen(widget.radial_box_title), widget.y, ']', default_fg_color);
+
+    // options
+    for (int i = 0; i < widget.radial_box_length; i ++) {
+        if (widget.radial_box_options_internal[i].is_selected == 1) {
+            mowi_set_pixel_internal(widget.x+1, widget.y+1+i, '>', default_pop_color);
+        }
+        else {
+            mowi_set_pixel_internal(widget.x+1, widget.y+1+i, ' ', default_fg_color);
+        }
+        for (int j = 0; j < widget.radial_box_options_internal[i].title_length; j++) {
+            mowi_set_pixel_internal(widget.x + 2 + j, widget.y + 1 + i, widget.radial_box_options_internal[i].title[j], default_fg_color);
+        }
+    }
 }
 
 void widget_hover_radial_box(MowiWidget widget) {
+    for (int i = 0; i < widget.radial_box_length; i++) {
+        if (screen_x >= widget.x+1 && screen_x < widget.x+2+widget.radial_box_options_internal[i].title_length && screen_y == widget.y+1+widget.radial_box_options_internal[i].index) {
+            if (widget.radial_box_options_internal[i].is_selected == true) {
+                mowi_set_pixel_internal(widget.x+1, widget.y+1+i, '>', default_pop_color);
+                renderer_set_pixel(widget.x+1, widget.y+1+i);
+            }
+            renderer_set_pixel(widget.x+1, widget.y+1+i);
+            for (int j = 0; j < widget.radial_box_options_internal[i].title_length; j++) {
+                mowi_set_pixel_internal(widget.x + 2 + j, widget.y + 1 + i, widget.radial_box_options_internal[i].title[j], default_pop_color);
+                renderer_set_pixel(widget.x + 2 + j, widget.y + 1 + i);
 
+            }
+        } 
+        else {
+            if (widget.radial_box_options_internal[i].is_selected == true) {
+                mowi_set_pixel_internal(widget.x+1, widget.y+1+i, '-', default_fg_color);
+                renderer_set_pixel(widget.x+1, widget.y+1+i);
+            }
+            else {
+                mowi_set_pixel_internal(widget.x+1, widget.y+1+i, ' ', default_fg_color);
+                renderer_set_pixel(widget.x+1, widget.y+1+i);
+            }
+            for (int j = 0; j < widget.radial_box_options_internal[i].title_length; j++) {
+                mowi_set_pixel_internal(widget.x + 2 + j, widget.y + 1 + i, widget.radial_box_options_internal[i].title[j], default_fg_color);
+                renderer_set_pixel(widget.x + 2 + j, widget.y + 1 + i);
+
+            }
+        }
+    }
 }
 
 void widget_update_user_radial_box(MowiWidget widget) {

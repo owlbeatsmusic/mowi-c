@@ -1,28 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mowi/widget/widget.h"
-#include "mowi/widget/widgets/text.h"
-#include "mowi/widget/widgets/rect.h"
-#include "mowi/widget/widgets/half-rect.h"
-#include "mowi/widget/widgets/action-button.h"
-#include "mowi/widget/widgets/toggle-button.h"
-#include "mowi/widget/widgets/list-box.h"
-#include "mowi/widget/widgets/radial-box.h"
-#include "mowi/widget/widgets/slider.h"
-#include "mowi/widget/widgets/text-box.h"
+#include "mowi/widget.h"
+#include "mowi/widgets/text.h"
+#include "mowi/widgets/rect.h"
+#include "mowi/widgets/half-rect.h"
+#include "mowi/widgets/action-button.h"
+#include "mowi/widgets/toggle-button.h"
+#include "mowi/widgets/list-box.h"
+#include "mowi/widgets/radial-box.h"
+#include "mowi/widgets/slider.h"
+#include "mowi/widgets/text-box.h"
 
-ActionButton *action_buttons[32] = {NULL};
-ToggleButton *toggle_buttons[32] = {NULL};
-ListBox      *list_boxes[32]     = {NULL};
-RadialBox    *radial_boxes[32]   = {NULL};
-Slider       *sliders[32]        = {NULL};
+ActionButton *action_buttons[MAX_USER_WIDGETS_PER_TYPE] = {NULL};
+ToggleButton *toggle_buttons[MAX_USER_WIDGETS_PER_TYPE] = {NULL};
+ListBox      *list_boxes[MAX_USER_WIDGETS_PER_TYPE]     = {NULL};
+RadialBox    *radial_boxes[MAX_USER_WIDGETS_PER_TYPE]   = {NULL};
+Slider       *sliders[MAX_USER_WIDGETS_PER_TYPE]        = {NULL};
 
-MowiWidget widgets[64];
+MowiWidget widgets[MAX_WIDGETS];
 uint16_t   widgets_length = 0;
 
 void mowi_add_widget(MowiWidget widget, int user_widget_index) {
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < MAX_WIDGETS; i++) {
         if (widgets[i].type == NONE) {
             widgets[i] = widget;
             widgets[i].index = i;
@@ -63,7 +63,7 @@ void mowi_add_widget(MowiWidget widget, int user_widget_index) {
     }
 }
 
-void input_click_widget(MowiWidget *widget) {
+void input_click_widget_internal(MowiWidget *widget) {
 	switch (widget->type) {
 		case MOWI_TEXT:          { break; }
 		case MOWI_RECT:          { break; }
@@ -91,7 +91,7 @@ void renderer_render_widget(MowiWidget widget) {
 	}
 }
 
-void renderer_hover_widget(MowiWidget widget) {
+void renderer_hover_widget_internal(MowiWidget widget) {
 	switch (widget.type) {
 		case MOWI_TEXT:          { break; }
 		case MOWI_RECT:          { break; }
@@ -106,7 +106,7 @@ void renderer_hover_widget(MowiWidget widget) {
 }
 
 /* Updates the structs that the user uses to create widgets. */
-void widget_user_update(MowiWidget widget) {
+void widget_user_update_internal(MowiWidget widget) {
     switch (widget.type) {
 		case MOWI_ACTION_BUTTON: { widget_update_user_action_button(widget); break; }
 		case MOWI_TOGGLE_BUTTON: { widget_update_user_toggle_button(widget); break; }

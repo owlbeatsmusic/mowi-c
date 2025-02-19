@@ -1,7 +1,7 @@
 #ifndef ACTION_BUTTON_H_
 #define ACTION_BUTTON_H_
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 
 void widget_input_action_button(MowiWidget *widget);
 void widget_render_action_button(MowiWidget widget);

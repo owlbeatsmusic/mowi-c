@@ -26,7 +26,7 @@ const uint32_t WINDOW_HEIGHT = 768;
 
 			case WM_PAINT: {
 				renderer_render_screen();
-				mowi_redraw_tick();
+				mowi_redraw_tick_internal();
 				return 0;
 			}
 			case WM_NCDESTROY:
@@ -39,7 +39,7 @@ const uint32_t WINDOW_HEIGHT = 768;
 	LRESULT CALLBACK WindowsProcessMessage(HWND window_handle, UINT message, WPARAM wParam, LPARAM lParam);
 
 	// this is the new main function called by windows
-	int WINAPI window_RunWindow(HINSTANCE hInstance, int nCmdShow) {
+	int WINAPI window_RunWindow(HINSTANCE hInstance, int nCmdShow, char window_title[]) {
 
 		static WNDCLASS window_class = { 0 };
 		static const wchar_t window_class_name[] = L"My Window Class";
@@ -50,7 +50,7 @@ const uint32_t WINDOW_HEIGHT = 768;
 		RegisterClass(&window_class);
 
 		window_handle =
-			CreateWindow((PCSTR)window_class_name, "Fönsternamn", WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hInstance, NULL);
+			CreateWindow((PCSTR)window_class_name, window_title, WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hInstance, NULL);
 		if (window_handle == NULL) { return -1; }
 
 		/* HWND textbox_handle = 
@@ -91,7 +91,7 @@ const uint32_t WINDOW_HEIGHT = 768;
 				DispatchMessage(&message);
 			}
 
-			mowi_tick();
+			mowi_tick_internal();
 
 			//glClearColor(255.0f, 255.0f, 255.0f, 1.0f);
 			//glClear(GL_COLOR_BUFFER_BIT);

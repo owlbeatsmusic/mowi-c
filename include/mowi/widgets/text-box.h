@@ -1,7 +1,7 @@
 #ifndef TEXT_BOX_H_
 #define TEXT_BOX_H_
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 
 void widget_input_text_box(MowiWidget *widget);
 void widget_render_text_box(MowiWidget widget);

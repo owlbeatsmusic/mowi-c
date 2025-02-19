@@ -1,7 +1,7 @@
 #ifndef HALF_RECT_H_
 #define HALF_RECT_H_
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 
 void widget_input_half_rect(MowiWidget *widget);
 void widget_render_half_rect(MowiWidget widget);

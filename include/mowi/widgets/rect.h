@@ -1,7 +1,7 @@
 #ifndef RECT_H_
 #define RECT_H_
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 
 void widget_input_rect(MowiWidget *widget);
 void widget_render_rect(MowiWidget widget);

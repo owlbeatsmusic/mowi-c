@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "mowi/widget/widget.h"
+#include "mowi/widget.h"
 #include "mowi/window.h"
 #include "mowi/renderer.h"
-#include "mowi/widget/widget-renderer.h"
 
 int screen_x = 0;
 int screen_y = 0;
@@ -41,7 +40,7 @@ void input_mouse_lmb_click(int x, int y) {
     screen_x = x / 9;
     screen_y = y / 20;
     for (int i = 0; i < widgets_length; i++) {
-        input_click_widget(&widgets[i]);
+        input_click_widget_internal(&widgets[i]);
     }
 
 }
@@ -59,7 +58,7 @@ void input_mouse_move(int x, int y) {
         screen_y = y / 20;
 
         for (int i = 0; i < widgets_length; i++) {
-            renderer_hover_widget(widgets[i]);
+            renderer_hover_widget_internal(widgets[i]);
         }
     }
 }
