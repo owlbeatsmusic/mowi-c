@@ -4,7 +4,7 @@ MoWi is a minimal and text-based UI-library that is not terminal-based. MoWi is 
 All widgets need to be created before creating the mowi-window. 
 
 Example:
-![example output window of MoWi](https://github.com/owlbeatsmusic/mowi-c/blob/main/docs/images/screenshot_2025-02-19.png?raw=true)
+![example output window of MoWi](https://github.com/owlbeatsmusic/mowi-c/blob/main/docs/images/Screenshot_2025-02-19.png?raw=true)
 Source:
 ```c
 #include  <stdio.h>
