@@ -18,8 +18,8 @@ void test_on_click(void) {
 }
 
 int main(void) {
-    widget_create_action_button(&action, 14, 14, "Action Button", &test_on_click); 
-    widget_create_toggle_button(&toggle, 14, 13, "Toggle Button");
+    widget_create_action_button(&action, 14, 4, "Action Button", &test_on_click); 
+    widget_create_toggle_button(&toggle, 14, 3, "Toggle Button");
 
     mowi_create("MoWi UI Module testwindow");
 
