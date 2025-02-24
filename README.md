@@ -30,6 +30,6 @@ int main(void) {
 ## How to use
 Just add the `mowi.h` to your project directory and compile with:
 ```shell
-cl main.c /link opengl32.lib gdi32.lib user32.lib`
+cl main.c /link opengl32.lib gdi32.lib user32.lib
 ```
 
