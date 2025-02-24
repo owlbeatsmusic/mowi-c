@@ -1,5 +1,5 @@
 /* WIN32
-cl -I./include -I./lib .\src\main.c .\src\mowi\mowi.c .\src\mowi\window.c .\src\mowi\input.c .\src\mowi\renderer.c .\src\mowi\widget.c .\src\common\color.c .\src\common\print.c .\src\mowi\widgets\text.c .\src\mowi\widgets\rect.c .\src\mowi\widgets\half-rect.c .\src\mowi\widgets\action-button.c .\src\mowi\widgets\toggle-button.c .\src\mowi\widgets\list-box.c .\src\mowi\widgets\radial-box.c .\src\mowi\widgets\slider.c .\src\mowi\widgets\text-box.c /link opengl32.lib gdi32.lib user32.lib
+cl .\main.c /link opengl32.lib gdi32.lib user32.lib
 */
 
 /* APPLE
@@ -8,7 +8,7 @@ clang -I./include -I./lib ./src/main.c ./src/mowi/mowi.c ./src/mowi/window.c ./s
 
 #include  <stdio.h>
 
-#include "mowi/mowi.h"
+#include "mowi.h"
 
 ActionButton action;
 ToggleButton toggle;
@@ -26,7 +26,6 @@ int main(void) {
         - Setting window properties by function
         - Refactoring to specify MoWi
         - Documentation
-
     */
 
     widget_create_action_button(&action, 14, 4, "Action Button", &test_on_click); 
