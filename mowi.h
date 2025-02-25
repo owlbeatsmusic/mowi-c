@@ -1,3 +1,4 @@
+
 #ifndef MOWI_H_
 #define MOWI_H_
 
@@ -11,12 +12,12 @@
 
 #pragma comment(lib, "Comctl32.lib")
 
-
 /* file structure
 
-0. DEFINITIONS
+0. HEADER FILE
     0.1 COMMON
     0.2 MOWI
+
 1. MAIN
 2. WINDOW
 3. RENDERER
@@ -304,6 +305,10 @@ void widget_render_text_box(MowiWidget widget);
 void widget_hover_text_box(MowiWidget widget);
 void widget_update_user_text_box(MowiWidget widget);
 void widget_create_text_box(ActionButton *action, int x, int y, char title[], void (*on_click_function)());
+
+#endif 
+
+#ifdef MOWI_IMPLEMENTATION
 
 /* 1. MOWI  */
 
@@ -1235,4 +1240,4 @@ void widget_create_text_box(ActionButton *action, int x, int y, char title[], vo
 
 
 
-#endif // MOWI_H_
+#endif // MOWI_IMPLEMENTATION

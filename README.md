@@ -8,6 +8,8 @@ Example:
 Source:
 ```c
 #include <stdio.h>
+
+#define MOWI_IMPLEMENTATION
 #include "mowi.h"
 
 ActionButton action;
@@ -28,7 +30,12 @@ int main(void) {
 ```
 
 ## How to use
-Just add the `mowi.h` to your project directory and compile with:
+Just add the `mowi.h` to your project directory(stb-style):
+```c
+#define MOWI_IMPLEMENTATION
+#include "mowi.h"
+```
+and compile with:
 ```shell
 cl main.c /link opengl32.lib gdi32.lib user32.lib
 ```

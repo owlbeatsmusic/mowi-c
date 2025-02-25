@@ -8,6 +8,7 @@ clang -I./include -I./lib ./src/main.c ./src/mowi/mowi.c ./src/mowi/window.c ./s
 
 #include  <stdio.h>
 
+#define MOWI_IMPLEMENTATION
 #include "mowi.h"
 
 ActionButton action;
